@@ -1,14 +1,17 @@
 package com.rest.webservices.restful_web_services.User;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.annotation.Generated;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
 import jakarta.validation.constraints.Past;
 import jakarta.validation.constraints.Size;
 
 import java.util.Date;
+import java.util.List;
 
 @Entity(name = "user_details")
 public class User {
@@ -24,6 +27,18 @@ public class User {
     @Past
     //@JsonProperty("date_of_birth")
     private Date birthDate;
+
+    public List<Post> getPosts() {
+        return posts;
+    }
+
+    public void setPosts(List<Post> posts) {
+        this.posts = posts;
+    }
+
+    //@JsonIgnore
+    @OneToMany(mappedBy = "user")
+    private List<Post> posts;
 
     public User( Integer id, String name, Date birthDate) {
         this.id = id;
